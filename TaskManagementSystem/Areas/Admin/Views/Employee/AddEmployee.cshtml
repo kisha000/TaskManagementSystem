@@ -1,0 +1,42 @@
+﻿@model TaskManagementSystem.Models.Employee
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add Employee</title>
+    <link href="~/Styles/Create.css" rel="stylesheet" />
+</head>
+@Html.Partial("_ModalMessage")
+<body>
+    <div class="container">
+        <h2>Add Employee</h2>
+        @using (Html.BeginForm("AddEmployee", "Employee", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div>
+                @Html.LabelFor(m => m.EmployeeName, "Employee Name:")
+                @Html.TextBoxFor(m => m.EmployeeName, new { required = "required", placeholder = "Name", id = "EmployeeName" })
+                @Html.LabelFor(m => m.PhoneNumber, "Phone Number:")
+                @Html.TextBoxFor(m => m.PhoneNumber, new { type = "tel", required = "required", placeholder = "Phone Number", id = "PhoneNumber" })
+            </div>
+            <div>
+                @Html.LabelFor(m => m.Address, "Address:")
+                @Html.TextAreaFor(m => m.Address, new { id = "Address", rows = 4, cols = 50, placeholder = "Address" })
+            </div>
+
+            <div>
+                @Html.LabelFor(m => m.Email, "Email:")
+                @Html.TextBoxFor(m => m.Email, new { type = "email", required = "required", placeholder = "Email", id = "Email" })
+                @Html.LabelFor(m => m.RoleId, "Role:")
+                @Html.DropDownListFor(m => m.RoleId, (IEnumerable<SelectListItem>)ViewBag.RoleList, "-- Select Role --", new { id = "RoleId" })
+            </div>
+            <input type="submit" value="Add Employee" />
+        }
+    </div>
+</body>
+</html>

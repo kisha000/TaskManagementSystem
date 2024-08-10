@@ -1,0 +1,50 @@
+﻿@model TaskManagementSystem.Models.Project
+
+<div class="modal-content">
+    <h2>Edit Project</h2>
+    @using (Html.BeginForm("Edit", "Project", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div>
+            @Html.LabelFor(model => model.ProjectName)
+            @Html.TextBoxFor(model => model.ProjectName)
+            @Html.ValidationMessageFor(model => model.ProjectName)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.Description)
+            @Html.TextAreaFor(model => model.Description)
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.StartDate)
+            @Html.TextBoxFor(model => model.StartDate, new { type = "date" })
+            @Html.ValidationMessageFor(model => model.StartDate)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.EndDate)
+            @Html.TextBoxFor(model => model.EndDate, new { type = "date" })
+            @Html.ValidationMessageFor(model => model.EndDate)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.ClientId, "Client Name")
+            @Html.DropDownListFor(model => model.ClientId, new SelectList(ViewBag.ClientList, "Value", "Text", ViewBag.SelectedClientId), "Select Client")
+            @Html.ValidationMessageFor(model => model.ClientId)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.Status)
+            @Html.DropDownListFor(model => model.Status, new SelectList(new[] { "Open", "Suspended", "Closed", "WorkIn Progress" }), "Select Status")
+            @Html.ValidationMessageFor(model => model.Status)
+        </div>
+
+        <div>
+            <input type="submit" value="Save" />
+            <button type="button" onclick="closeModal()">Cancel</button>
+        </div>
+    }
+</div>

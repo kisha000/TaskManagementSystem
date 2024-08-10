@@ -1,0 +1,64 @@
+﻿@model TaskManagementSystem.Models.Project
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create New Project</title>
+    <link href="~/Styles/Create.css" rel="stylesheet" />
+</head>
+@Html.Partial("_ModalMessage")
+<body>
+    <div class="container">
+        <h2>Add New Project</h2>
+        @using (Html.BeginForm("Create", "Project", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div>
+                @Html.LabelFor(model => model.ProjectName, "Project Title:")
+                @Html.TextBoxFor(model => model.ProjectName, new { id = "ProjectName" })
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.Description, "Description:")
+                @Html.TextAreaFor(model => model.Description, new { id = "Description", rows = 4, cols = 50 })
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.ClientId, "Client:")
+                @Html.DropDownListFor(model => model.ClientId, (IEnumerable<SelectListItem>)ViewBag.ClientList, "-- Select Client --", new { id = "ClientId" })
+            </div>
+            <div>
+                @Html.LabelFor(model => model.StartDate, "Start Date:")
+                @Html.TextBoxFor(model => model.StartDate, "{0:yyyy-MM-dd}", new { @class = "date-input", id = "StartDate", type = "date" })
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.EndDate, "End Date:")
+                @Html.TextBoxFor(model => model.EndDate, "{0:yyyy-MM-dd}", new { @class = "date-input", id = "EndDate", type = "date" })
+            </div>
+
+            <div>
+                @Html.Label("Priority Level:")
+                <div>
+                    <label>@Html.RadioButtonFor(model => model.PriorityLevel, "Low") Low</label>
+                    <label>@Html.RadioButtonFor(model => model.PriorityLevel, "Medium") Medium</label>
+                    <label>@Html.RadioButtonFor(model => model.PriorityLevel, "High") High</label>
+                </div>
+            </div>
+
+            <button type="submit">Add Project</button>
+        }
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                showModalMessage('@ViewBag.ModalMessage');
+            });
+        </script>
+    </div>
+</body>
+</html>

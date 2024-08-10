@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Panel - Task Management System</title>
+    <link href="~/Styles/SharedMasterStyles.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="projectContainer">
+        <div id="collapseBtn">&#x2190;</div>
+        <div id="projectName">Task Management System</div>
+        <a id="logoutLink" href="@Url.Action("Logout", "Account", new { area = "" })">Logout</a>
+    </div>
+
+    <div id="sidebar">
+        <div id="userInfo" style="background-color: #007bff; color: white; padding: 10px;">
+            User:
+        </div>
+        <ul>
+            <li><a href="@Url.Action("Index", "Homepage")">Home</a></li>
+            <li class="has-subitems">
+                <a>Project</a>
+                <ul>
+                    <li><a href="@Url.Action("ViewProjects", "Project")">View Projects</a></li>
+                </ul>
+            </li>
+            <li class="has-subitems">
+                <a>Task</a>
+                <ul>
+                    <li><a href="@Url.Action("Index", "Task")">View Tasks</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div id="content">
+        @RenderBody()
+    </div>
+    <script src="~/JS/Sidebar.js"></script>
+</body>
+</html>

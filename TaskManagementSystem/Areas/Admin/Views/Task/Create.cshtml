@@ -1,0 +1,118 @@
+﻿@model TaskManagementSystem.Models.Task
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create New Task</title>
+    <link href="~/Styles/Create.css" rel="stylesheet" />
+</head>
+@Html.Partial("_ModalMessage")
+<body>
+    <div class="container">
+        <h2>Create New Task</h2>
+        @using (Html.BeginForm("Create", "Task", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div>
+                @Html.LabelFor(model => model.TaskName, "Task Name:")
+                @Html.TextBoxFor(model => model.TaskName)
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.ProjectId, "Project:")
+                @Html.DropDownListFor(model => model.ProjectId, (IEnumerable<SelectListItem>)ViewBag.ProjectList, "-- Select Project --", new { id = "ProjectId" })
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.TaskDescription, "Task Description:")
+                @Html.TextAreaFor(model => model.TaskDescription, new { rows = 4, cols = 50 })
+            </div>
+
+            <div>
+                @Html.Label("Attachments:", new { @for = "attachments" })
+                <input type="file" id="attachments" name="attachments" multiple>
+                <span id="selectedFileName" style="display: none;"></span>
+                @*<button type="button" id="customFileButton">Select Files</button>*@
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.StartDate, "Start Date:")
+                @Html.TextBoxFor(model => model.StartDate, "{0:dd-MM-yyyy}", new { type = "date" })
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.EstimateDate, "Due Date:")
+                @Html.TextBoxFor(model => model.EstimateDate, "{0:dd-MM-yyyy}", new { type = "date" })
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.PriorityLevel, "Priority Level:")
+                <div>
+                    <div>
+                        @Html.RadioButtonFor(model => model.PriorityLevel, "Low") Low
+                    </div>
+                    <div>
+                        @Html.RadioButtonFor(model => model.PriorityLevel, "Medium") Medium
+                    </div>
+                    <div>
+                        @Html.RadioButtonFor(model => model.PriorityLevel, "High") High
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <label><input type="checkbox" name="ForwardedTo" id="ForwardedToCheckbox"> Forward to:</label>
+                <div id="employeeDropdown" style="display: none;">
+                    @Html.DropDownListFor(model => model.EmployeeId, (IEnumerable<SelectListItem>)ViewBag.EmployeeList, "-- Select Employee --", new { id = "EmployeeId" })
+                </div>
+            </div>
+
+            <button type="submit">Create Task</button>
+        }
+    </div>
+    <script>
+        function displayFileName(input) {
+            var fileName = input.files[0].name;
+            var selectedFileNameSpan = document.getElementById("selectedFileName");
+            selectedFileNameSpan.textContent = fileName;
+            selectedFileNameSpan.style.display = "inline";
+        }
+    </script>
+    <script>
+        document.getElementById('customFileButton').addEventListener('click', function () {
+            document.getElementById('attachments').click();
+        });
+    </script>
+    <script>
+        function toggleEmployeeDropdown() {
+            var checkbox = document.getElementById("ForwardedToCheckbox");
+            var employeeDropdown = document.getElementById("employeeDropdown");
+            if (checkbox.checked) {
+                employeeDropdown.style.display = "block";
+            } else {
+                employeeDropdown.style.display = "none";
+            }
+        }
+
+        document.getElementById("ForwardedToCheckbox").addEventListener("change", toggleEmployeeDropdown);
+
+        toggleEmployeeDropdown();
+
+        function getSelectedEmployeeId() {
+            var checkbox = document.getElementById("ForwardedToCheckbox");
+            if (checkbox.checked) {
+                var employeeId = document.getElementById("EmployeeId").value;
+                console.log("Selected Employee ID:", employeeId);
+            }
+        }
+
+        document.querySelector("form").addEventListener("submit", getSelectedEmployeeId);
+    </script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+﻿@model List<TaskManagementSystem.Models.Project>
+
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Projects</title>
+    @*<link href="~/Styles/TableStyle.css" rel="stylesheet" />*@
+    <style>
+        .container {
+            display: flex;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 0px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .left-container {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .right-container {
+            flex: 2;
+        }
+
+        .project-preview {
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .heading-box {
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            padding: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: -20px;
+            height: 15px;
+        }
+
+
+        .project-details-box {
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .details-column {
+            display: flex;
+            justify-content: space-between;
+        }
+
+            .details-column > div {
+                flex-basis: 50%;
+                margin-top: -25px;
+            }
+
+        .project-link {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        h2 {
+            margin-top: -5px;
+        }
+
+        h4 {
+            margin-top: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="heading-box">
+            <h2>Projects</h2>
+        </div>
+        <div class="container">
+            <div class="left-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Project Name</th>
+                            <th>Contact Person</th>
+                            <th>Client Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var project in Model)
+                        {
+                            <tr>
+                                <td><a href="#" class="project-link" data-project-id="@project.ProjectId">@project.ProjectName</a></td>
+                                <td>@project.ClientName</td>
+                                <td>@project.ClientName</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="right-container">
+                <div class="project-preview">
+                    <h3>Preview</h3>
+                    <span>Click on a Project Name in the left to see Preview</span>
+                    <div class="project-details-box">
+                        <h4 id="project-name"></h4>
+                        <div class="details-column">
+                            <div>
+                                <p>Status: <span id="project-status"></span></p>
+                                <p>Start Date: <span id="start-date"></span></p>
+                            </div>
+                            <div>
+                                <p>Priority: <span id="priority"></span></p>
+                                <p>End Date: <span id="end-date"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-statistics">
+                    <h3>Task Statistics</h3>
+                    <ul>
+                        <li>Open: <span id="open-tasks"></span></li>
+                        <li>Fixed: <span id="fixed-tasks"></span></li>
+                        <li>Reopen: <span id="reopen-tasks"></span></li>
+                        <li>Closed: <span id="closed-tasks"></span></li>
+                        <li>Others: <span id="other-tasks"></span></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="projectMembersModal" class="modal">
+        <div class="modal-content"></div>
+    </div>
+
+    <script src="~/JS/Search.js"></script>
+    <script src="~/Scripts/jquery-3.7.1.min.js"></script>
+    <script src="~/JS/Chat.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+
+    <script>
+       function formatDateFromTicks(ticks) {
+            var date = new Date(parseInt(ticks.substr(6)));
+            return date.toLocaleDateString('en-IN');
+        }
+
+        $(document).ready(function () {
+            $('.project-link').click(function (e) {
+                e.preventDefault();
+                var projectId = $(this).data('project-id');
+                var url = '@Url.Action("GetProjectDetails", "Project")?projectId=' + projectId;
+                $.get(url, function (data) {
+                    if (data !== null) {
+                        $('#project-name').text(data.ProjectName);
+                        $('#project-status').text(data.Status);
+                        $('#start-date').text(formatDateFromTicks(data.StartDate));
+                        $('#priority').text(data.PriorityLevel);
+                        $('#end-date').text(formatDateFromTicks(data.EndDate));
+                    } else {
+                        $('#project-name').text('Project Not Found');
+                        $('#project-status').text('');
+                        $('#start-date').text('');
+                        $('#priority').text('');
+                        $('#end-date').text('');
+                    }
+                });
+            });
+            $('.project-link:first').trigger('click');
+        });
+    </script>
+</body>
+</html>

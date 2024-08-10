@@ -1,0 +1,56 @@
+﻿@model IEnumerable<TaskManagementSystem.Models.Task>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Open Tasks (View Only)</title>
+    <link href="~/Styles/TableStyle.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+        <h1>Open Tasks (View Only)</h1>
+        <input type="text" id="searchInput" placeholder="Search...">
+        @foreach (var kvp in ViewBag.TasksByProject)
+        {
+            <h2>Project : @kvp.Key</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Task Name</th>
+                        <th>Task Description</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>PriorityLevel</th>
+                        <th>Status</th>
+                        <th>Created Date</th>
+                        <th>Modified Date</th>
+                        <th>Assigned To</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var task in kvp.Value)
+                    {
+                        <tr>
+                            <td>@task.TaskName</td>
+                            <td>@task.TaskDescription</td>
+                            <td>@(task.StartDate?.ToString("dd-MMM-yyyy") ?? "")</td>
+                            <td>@(task.EstimateDate?.ToString("dd-MMM-yyyy") ?? "")</td>
+                            <td>@task.PriorityLevel</td>
+                            <td>@task.Status</td>
+                            <td>@task.CreatedDate.ToShortDateString()</td>
+                            <td>@(task.ModifiedDate != null ? task.ModifiedDate.Value.ToShortDateString() : "None")</td>
+                            <td>@task.EmployeeName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+    <script src="~/JS/Search.js"></script>
+</body>
+</html>

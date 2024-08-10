@@ -1,0 +1,63 @@
+﻿@model IEnumerable<TaskManagementSystem.Models.Project>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Open Projects(Read Only)</title>
+    <link href="~/Styles/TableStyle.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+        <h2>Open Projects(Read Only)</h2>
+        <input type="text" id="searchInput" placeholder="Search...">
+        <table>
+            <thead>
+                <tr>
+                    <th>Project Name</th>
+                    <th>Description</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Client</th>
+                    <th>Status</th>
+                    <th>Involved Employees</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Any())
+                {
+                    foreach (var project in Model)
+                    {
+                        <tr>
+                            <td>@project.ProjectName</td>
+                            <td>@project.Description</td>
+                            <td>@(project.StartDate.HasValue ? project.StartDate.Value.ToString("dd-MMM-yyyy") : "")</td>
+                            <td>@(project.EndDate.HasValue ? project.EndDate.Value.ToString("dd-MMM-yyyy") : "")</td>
+                            <td>@project.ClientName</td>
+                            <td>@project.Status</td>
+                            <td>
+                                @foreach (var employee in project.ProjectEmployees)
+                                {
+                                    <span>@employee.EmployeeName</span><br />
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="no-records">No records found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+    <script src="~/JS/Search.js"></script>
+</body>
+</html>

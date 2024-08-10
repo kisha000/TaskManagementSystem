@@ -1,0 +1,55 @@
+﻿@model IEnumerable<TaskManagementSystem.Models.Task>
+
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Tasks</title>
+    <link href="~/Styles/TableStyle.css" rel="stylesheet" />
+    @*<link href="~/Styles/ModalStyles.css" rel="stylesheet" />*@
+</head>
+<body>
+    <div>
+        <h2>Tasks</h2>
+        <input type="text" id="searchInput" placeholder="Search...">
+        <table>
+            <thead>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Description</th>
+                    <th>Priority Level</th>
+                    <th>Status</th>
+                    <th>Created Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Any())
+                {
+                    foreach (var task in Model)
+                    {
+                        <tr>
+                            <td><a href="@Url.Action("TaskDetails", "Task", new { taskId = task.TaskId })">@task.TaskName</a></td>
+                            <td><a href="@Url.Action("TaskDetails", "Task", new { taskId = task.TaskId })">@task.TaskDescription</a></td>
+                            <td>@task.PriorityLevel</td>
+                            <td>@task.Status</td>
+                            <td>@task.CreatedDate.ToShortDateString()</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="no-records">No records found.</td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+    <script src="~/JS/Search.js"></script>
+</body>
+</html>

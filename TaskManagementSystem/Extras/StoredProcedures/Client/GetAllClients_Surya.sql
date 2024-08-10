@@ -1,0 +1,5 @@
+CREATE OR ALTER PROCEDURE GetAllClients_Surya
+AS
+BEGIN
+    SELECT * FROM Clients_Surya WHERE IsDeleted = 0
+END

@@ -1,0 +1,105 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0px;
+    padding: 0px;
+}
+
+#projectContainer {
+    display: flex;
+    align-items: center;
+    background-color: #007bff;
+    color: white;
+    padding: 8px;
+    margin-bottom: 8px;
+    font-size: 25px;
+}
+
+#logoutLink {
+    font-size: 16px;
+    margin-left: auto;
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #dc3545;
+    transition: background-color 0.3s ease;
+}
+
+    #logoutLink:hover {
+        background-color: #c82333;
+    }
+
+#sidebar {
+    width: 200px;
+    background-color: #9eeee9;
+    float: left;
+    transition: width 0.3s ease, opacity 0.3s ease;
+    height: 580px;
+    overflow-y: auto;
+}
+
+    #sidebar.collapsed {
+        width: 0;
+        opacity: 0;
+    }
+
+    #sidebar ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+        #sidebar ul li {
+            padding: 10px;
+        }
+
+            #sidebar ul li a {
+                text-decoration: none;
+                color: #333;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+                #sidebar ul li a:hover {
+                    color: #007bff;
+                }
+
+        #sidebar ul ul {
+            display: none;
+            margin-left: 20px;
+        }
+
+        #sidebar ul li.has-subitems:hover ul {
+            display: block;
+        }
+
+#collapseBtn {
+    cursor: pointer;
+    text-align: center;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px 0 0 5px;
+    transition: background-color 0.3s ease;
+}
+
+    #collapseBtn:hover {
+        background-color: #0056b3;
+    }
+
+#content {
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+    overflow: auto;
+}
+
+.collapsed #collapseBtn::after {
+    content: "\2192";
+    margin-left: 5px;
+    transition: content 0.3s ease;
+}
+
+.collapsed #content {
+    margin-left: 0;
+}

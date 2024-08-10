@@ -1,0 +1,6 @@
+CREATE OR ALTER PROCEDURE GetAllRoles_Surya
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT * FROM UserRoles_Surya WHERE IsDeleted = 0;
+END

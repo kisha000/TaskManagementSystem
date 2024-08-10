@@ -1,0 +1,14 @@
+﻿@model string
+
+<div class="modal-content">
+    <h2>Delete Confirmation</h2>
+    <p>@ViewBag.DeleteMessage</p>
+    <div class="btn-group">
+        @using (Html.BeginForm((string)ViewBag.FormAction, (string)ViewBag.FormController, (object)ViewBag.FormRouteValues, FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <input type="submit" value="Yes" class="btn btn-danger" />
+            <button type="button" class="btn btn-secondary" onclick="closeModal()">No</button>
+        }
+    </div>
+</div>

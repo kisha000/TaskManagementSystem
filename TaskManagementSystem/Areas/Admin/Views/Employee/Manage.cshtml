@@ -1,0 +1,125 @@
+﻿@model List<TaskManagementSystem.Models.Employee>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employees</title>
+    <link href="~/Styles/TableStyle.css" rel="stylesheet" />
+    <link href="~/Styles/ModalStyles.css" rel="stylesheet" />
+</head>
+@Html.Partial("_ModalMessage")
+<body>
+    <h1>Employees</h1>
+    <input type="text" id="searchInput" placeholder="Search...">
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+                <th>Project</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                foreach (var employee in Model)
+                {
+                    <tr>
+                        <td>@employee.EmployeeName</td>
+                        <td>@employee.Email</td>
+                        <td>@employee.PhoneNumber</td>
+                        <td>@employee.Address</td>
+                        <td>@employee.ProjectName</td>
+                        <td>@employee.RoleName</td>
+                        <td class="actions">
+                            <a href="@Url.Action("Edit", "Employee", new { id = employee.EmployeeId })" class="btn-edit" data-id="@employee.EmployeeId">Edit</a>
+                            <a href="@Url.Action("Delete", "Employee", new { id = employee.EmployeeId })" class="btn-delete" data-id="@employee.EmployeeId">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7" class="no-records">No records found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="create-link">
+        @Html.ActionLink("Add a New Employee", "AddEmployee", null, new { @class = "btn-create" })
+    </div>
+
+    <div id="editEmployeeModal" class="modal">
+        <div class="modal-content"></div>
+    </div>
+    <div id="deleteEmployeeModal" class="modal">
+        <div class="modal-content"></div>
+    </div>
+    <script src="~/JS/Search.js"></script>
+    <script>
+        document.querySelectorAll(".btn-edit").forEach(btn => {
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+                const employeeId = this.getAttribute("data-id");
+                const url = "@Url.Action("Edit", "Employee")" + "?id=" + employeeId;
+
+                fetch(url)
+                    .then(response => response.text())
+                    .then(data => {
+                        document.querySelector("#editEmployeeModal .modal-content").innerHTML = data;
+                        document.getElementById("editEmployeeModal").style.display = "block";
+                    });
+            });
+        });
+        document.querySelectorAll(".btn-delete").forEach(btn => {
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+                const employeeId = this.getAttribute("data-id");
+                const url = "@Url.Action("Delete", "Employee")" + "?id=" + employeeId;
+
+                fetch(url)
+                    .then(response => response.text())
+                    .then(data => {
+                        document.querySelector("#deleteEmployeeModal .modal-content").innerHTML = data;
+                        document.getElementById("deleteEmployeeModal").style.display = "block";
+                    });
+            });
+        });
+
+        function closeModal() {
+            var modal = document.getElementById('editEmployeeModal');
+            modal.style.display = 'none';
+        }
+        function closeModal() {
+            var modal = document.getElementById('deleteEmployeeModal');
+            modal.style.display = 'none';
+        }
+        // Close the modal when clicking outside the modal content
+        window.addEventListener("click", function (event) {
+            const modal = document.getElementById("deleteEmployeeModal");
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+        window.addEventListener("click", function (event) {
+            const modal = document.getElementById("editEmployeeModal");
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+
+        
+    </script>
+</body>
+</html>

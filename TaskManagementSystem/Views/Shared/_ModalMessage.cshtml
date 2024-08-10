@@ -1,0 +1,66 @@
+﻿<div id="modalMessage" class="modal-message">
+    <div class="modal-content">
+        <span id="modalMessageText">@TempData["ModalMessage"]</span>
+        <span class="close">&times;</span>
+    </div>
+</div>
+
+<style>
+    .modal-message {
+        display: none;
+        position: fixed;
+        top: 35px;
+        left: 56%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        color: #000;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        max-width: 400px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .modal-content {
+        margin-bottom: 10px;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #000;
+        font-size: 24px;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+        .close:hover {
+            color: #ff0000;
+        }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const modalMessage = document.getElementById("modalMessage");
+        const closeButton = document.querySelector(".close");
+        const messageText = document.getElementById("modalMessageText").innerText.trim();
+
+        if (messageText !== "") {
+            modalMessage.style.display = "block";
+
+            closeButton.addEventListener("click", function () {
+                modalMessage.style.display = "none";
+            });
+
+            // Autohide after 4 seconds
+            setTimeout(function () {
+                modalMessage.style.display = "none";
+            }, 4000);
+        }
+    });
+
+
+</script>

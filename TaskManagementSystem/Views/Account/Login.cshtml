@@ -1,0 +1,68 @@
+﻿@model TaskManagementSystem.Models.Employee
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link href="~/Styles/LoginPage.css" rel="stylesheet" />
+    <link href="~/Styles/ModalStyles.css" rel="stylesheet" />
+</head>
+@Html.Partial("_ModalMessage")
+<body>
+    <div class="login-container">
+        <h1>Task Management System</h1>
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div>
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+            <input type="submit" value="Login" class="btn btn-primary" />
+        }
+        <div class="new-account-link">
+            <a href="@Url.Action("ForgotPassword", "Account")"class="btn-forgotPassword">Forgot Password</a>
+        </div>
+    </div>
+    <div id="ForgotPasswordModal" class="modal">
+        <div class="modal-content"></div>
+    </div>
+    <script>
+        document.querySelectorAll(".btn-forgotPassword").forEach(btn => {
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+                const url = "@Url.Action("ForgotPassword", "Account")"
+
+                fetch(url)
+                    .then(response => response.text())
+                    .then(data => {
+                        document.querySelector("#ForgotPasswordModal .modal-content").innerHTML = data;
+                        document.getElementById("ForgotPasswordModal").style.display = "block";
+                    });
+            });
+        });
+        window.addEventListener("click", function (event) {
+            const modal = document.getElementById("ForgotPasswordModal");
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+        function closeModal() {
+            var modal = document.getElementById('ForgotPasswordModal');
+            modal.style.display = 'none';
+        }
+    </script>
+</body>
+</html>

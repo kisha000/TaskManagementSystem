@@ -1,0 +1,123 @@
+﻿@model IEnumerable<TaskManagementSystem.Models.Project>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Projects</title>
+    <link href="~/Styles/TableStyle.css" rel="stylesheet" />
+    <link href="~/Styles/ModalStyles.css" rel="stylesheet" />
+</head>
+@Html.Partial("_ModalMessage")
+<body>
+    <div>
+        <h2>Projects</h2>
+        <input type="text" id="searchInput" placeholder="Search Projects...">
+        <table>
+            <thead>
+                <tr>
+                    <th>Project Name</th>
+                    <th>Description</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Client</th>
+                    <th>Status</th>
+                    <th class="actions">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Any())
+                {
+                    foreach (var project in Model)
+                    {
+                        <tr>
+                            <td>@project.ProjectName</td>
+                            <td>@project.Description</td>
+                            <td>@(project.StartDate.HasValue ? project.StartDate.Value.ToString("dd-MMM-yyyy") : "")</td>
+                            <td>@(project.EndDate.HasValue ? project.EndDate.Value.ToString("dd-MMM-yyyy") : "")</td>
+                            <td>@project.ClientName</td>
+                            <td>@project.Status</td>
+                            <td class="actions">
+                                <a href="@Url.Action("Edit", "Client", new { id = project.ProjectId })" class="btn-edit" data-id="@project.ProjectId">Edit</a>
+                                <a href="@Url.Action("Delete", "Client", new { id = project.ProjectId})" class="btn-delete" data-id="@project.ProjectId">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="no-records">No records found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="create-link">
+            @Html.ActionLink("Add a New Project", "Create", null, new { @class = "btn-create" })
+        </div>
+    </div>
+    <div id="editProjectModal" class="modal">
+        <div class="modal-content"></div>
+    </div>
+    <div id="deleteProjectModal" class="modal">
+        <div class="modal-content"></div>
+    </div>
+    <script src="~/JS/Search.js"></script>
+    <script>
+        document.querySelectorAll(".btn-edit").forEach(btn => {
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+                const projectId = this.getAttribute("data-id");
+                const url = "@Url.Action("Edit", "Project")" + "?id=" + projectId;
+
+                fetch(url)
+                    .then(response => response.text())
+                    .then(data => {
+                        document.querySelector("#editProjectModal .modal-content").innerHTML = data;
+                        document.getElementById("editProjectModal").style.display = "block";
+                    });
+            });
+        });
+        document.querySelectorAll(".btn-delete").forEach(btn => {
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+                const projectId = this.getAttribute("data-id");
+                const url = "@Url.Action("Delete", "Project")" + "?id=" + projectId;
+
+                fetch(url)
+                    .then(response => response.text())
+                    .then(data => {
+                        document.querySelector("#deleteProjectModal .modal-content").innerHTML = data;
+                        document.getElementById("deleteProjectModal").style.display = "block";
+                    });
+            });
+        });
+        // Close the modal when clicking outside the modal content
+        window.addEventListener("click", function (event) {
+            const modal = document.getElementById("editProjectModal");
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+        function closeModal() {
+            var modal = document.getElementById('editProjectModal');
+            modal.style.display = 'none';
+        }
+        // Close the modal when clicking outside the modal content
+        window.addEventListener("click", function (event) {
+            const modal = document.getElementById("deleteProjectModal");
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+        function closeModal() {
+            var modal = document.getElementById('deleteProjectModal');
+            modal.style.display = 'none';
+        }
+    </script>
+</body>
+</html>

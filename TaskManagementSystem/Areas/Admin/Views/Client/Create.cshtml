@@ -1,0 +1,104 @@
+﻿@model TaskManagementSystem.Models.Client
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add New Client</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: -20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            resize: none;
+            min-height: 100px;
+            overflow-y: scroll;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Add New Client</h2>
+        @using (Html.BeginForm("Create", "Client", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div>
+                @Html.LabelFor(model => model.ClientName)
+                @Html.TextBoxFor(model => model.ClientName, new { id = "ClientName" })
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.ContactPerson)
+                @Html.TextBoxFor(model => model.ContactPerson, new { id = "ContactPerson" })
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.Email)
+                @Html.TextBoxFor(model => model.Email, new { id = "Email", type = "email" })
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.Phone)
+                @Html.TextBoxFor(model => model.Phone, new { id = "PhoneNumber", type = "tel" })
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.Address)
+                @Html.TextAreaFor(model => model.Address, new { id = "Address", rows = 4, cols = 50 })
+            </div>
+
+            <button type="submit">Add Client</button>
+        }
+    </div>
+</body>
+</html>

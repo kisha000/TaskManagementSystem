@@ -1,0 +1,84 @@
+﻿@model TaskManagementSystem.Models.Task
+
+<div class="modal-content">
+    <h2>Edit Task</h2>
+    @using (Html.BeginForm("Edit", "Task", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div>
+            @Html.LabelFor(model => model.TaskName)
+            @Html.TextBoxFor(model => model.TaskName)
+            @Html.ValidationMessageFor(model => model.TaskName)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.ProjectId, "Project Name")
+            @Html.DropDownListFor(model => model.ProjectId, new SelectList(ViewBag.ProjectList, "Value", "Text", ViewBag.SelectedProjectId), "Select Project")
+            @Html.ValidationMessageFor(model => model.ProjectId)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.TaskDescription)
+            @Html.TextAreaFor(model => model.TaskDescription)
+            @Html.ValidationMessageFor(model => model.TaskDescription)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.StartDate)
+            @Html.TextBoxFor(model => model.StartDate, new { type = "date" })
+            @Html.ValidationMessageFor(model => model.StartDate)
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.EstimateDate)
+            @Html.TextBoxFor(model => model.EstimateDate, new { type = "date" })
+            @Html.ValidationMessageFor(model => model.EstimateDate)
+        </div>
+        <div>
+            @Html.LabelFor(model => model.PriorityLevel, "Priority Level:")
+            <div>
+                <div>
+                    @Html.RadioButtonFor(model => model.PriorityLevel, "Low") Low
+                </div>
+                <div>
+                    @Html.RadioButtonFor(model => model.PriorityLevel, "Medium") Medium
+                </div>
+                <div>
+                    @Html.RadioButtonFor(model => model.PriorityLevel, "High") High
+                </div>
+            </div>
+            <div>
+                <label><input type="checkbox" name="ForwardedTo" id="ForwardedToCheckbox"> Forward to:</label>
+                <div id="employeeDropdown" style="display: none;">
+                    @Html.DropDownListFor(model => model.EmployeeId, (IEnumerable<SelectListItem>)ViewBag.EmployeeList, "-- Select Employee --", new { id = "EmployeeId" })
+                </div>
+            </div>
+        </div>
+        <div>
+            <input type="submit" value="Save" />
+            <button type="button" onclick="closeModal()">Cancel</button>
+        </div>
+        <script>
+            function toggleEmployeeDropdown() {
+                var checkbox = document.getElementById("ForwardedToCheckbox");
+                var employeeDropdown = document.getElementById("employeeDropdown");
+                if (checkbox.checked) {
+                    employeeDropdown.style.display = "block";
+                } else {
+                    employeeDropdown.style.display = "none";
+                }
+            }
+
+            document.getElementById("ForwardedToCheckbox").addEventListener("change", toggleEmployeeDropdown);
+
+            toggleEmployeeDropdown();
+
+            function getSelectedEmployeeId() {
+                var checkbox = document.getElementById("ForwardedToCheckbox");
+                if (checkbox.checked) {
+                    var employeeId = document.getElementById("EmployeeId").value;
+                    console.log("Selected Employee ID:", employeeId);
+                }
+            }
+
+            document.querySelector("form").addEventListener("submit", getSelectedEmployeeId);
+        </script>
+    }
+</div>

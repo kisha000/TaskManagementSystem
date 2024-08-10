@@ -1,0 +1,88 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0px;
+    padding: 0px;
+}
+a {
+    text-decoration: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 0px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    vertical-align: top;
+}
+
+
+th {
+    background-color: #007bff;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#searchInput {
+    float: right;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    width: 200px;
+    transition: border-color 0.3s;
+}
+
+    #searchInput:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+.actions {
+    white-space: nowrap;
+}
+
+    .actions a {
+        margin-right: 5px;
+        color: #007bff;
+        text-decoration: none;
+    }
+
+        .actions a:hover {
+            text-decoration: underline;
+        }
+
+.create-link {
+    display: block;
+    margin-top: 20px;
+    text-align: right;
+}
+
+    .create-link a {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+        .create-link a:hover {
+            background-color: #0056b3;
+        }
+
+.no-records {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 20px;
+}

@@ -1,0 +1,102 @@
+﻿@model TaskManagementSystem.Models.Dashboard
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Admin Homepage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: -20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 178px;
+        }
+
+        .dashboard {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-item {
+            background-color: #a1d4ee;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 45%;
+            text-align: center; 
+        }
+
+            .dashboard-item h2 {
+                margin-bottom: 10px;
+                color: #333;
+            }
+
+            .dashboard-item p {
+                font-size: 24px;
+                margin: 5px 0;
+                color: #007bff;
+                font-weight: bold;
+            }
+
+        .welcome-message {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 28px;
+        }
+
+        .view-all-link {
+            text-align: right;
+            margin-top: 10px;
+        }
+
+            .view-all-link a {
+                color: #007bff;
+                text-decoration: none;
+                transition: color 0.3s;
+            }
+
+                .view-all-link a:hover {
+                    color: #0056b3;
+                }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="welcome-message">
+            Welcome Admin
+        </div>
+        <div class="dashboard">
+            <div class="dashboard-item">
+                <h2>Total Open Projects</h2>
+                <p>@Model.TotalOpenProjects</p>
+                <div class="view-all-link">
+                    <a href="@Url.Action("CurrentProjects", "Report")">(View All)</a>
+                </div>
+            </div>
+            <div class="dashboard-item">
+                <h2>Total Tasks Assigned</h2>
+                <p>@Model.TotalTasksAssigned</p>
+                <div class="view-all-link">
+                    <a href="@Url.Action("Manage", "Task")">(View All)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

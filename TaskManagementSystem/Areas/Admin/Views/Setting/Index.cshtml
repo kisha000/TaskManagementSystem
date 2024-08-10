@@ -1,0 +1,145 @@
+﻿@{
+    ViewBag.Title = "Settings";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #343a40;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 12px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 230px;
+        }
+
+        h1 {
+            color: #007bff;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .settings-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .setting-item {
+            flex-basis: 30%;
+            background-color: #f1f1f1;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+            .setting-item h2 {
+                color: #333;
+                margin-bottom: 15px;
+            }
+
+            .setting-item ul {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            .setting-item li {
+                margin-bottom: 10px;
+            }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+            .btn-primary:hover {
+                background-color: #0056b3;
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+            }
+    </style>
+</head>
+<body>
+    <header>
+        <p>@ViewBag.Path</p> <!-- Display current tab or page path -->
+    </header>
+    <div class="container">
+        <div class="settings-row">
+            <div class="setting-item">
+                <h2>Theme and Appearance</h2>
+                <ul>
+                    <li>Theme Selection</li>
+                    <li>Customization</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="settings-row">
+            <div class="setting-item">
+                <h2>Account Management</h2>
+                <ul>
+                    <li>Account Settings</li>
+                    <li>Management Actions</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

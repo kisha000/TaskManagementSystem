@@ -1,0 +1,46 @@
+﻿@model TaskManagementSystem.Models.Project
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Manage Projects</title>
+    <link href="~/Styles/Create.css" rel="stylesheet" />
+</head>
+@Html.Partial("_ModalMessage")
+<body>
+    <div class="container">
+        <h2>Add Employee To Project</h2>
+        @using (Html.BeginForm("AddEmployeetoTheProject", "Project", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div>
+                @Html.LabelFor(model => model.ProjectName, "Project Name:")
+                @Html.DropDownListFor(model => model.ProjectId, (SelectList)ViewBag.ProjectList, "-- Select Project --", new { id = "ProjectId" })
+            </div>
+            <div>
+                <h4>Select Employees:</h4>
+                <div style="height: 100px; overflow-y: auto;width:280px">
+                    <div id="checkboxList">
+                        @foreach (var item in ViewBag.EmployeeList)
+                        {
+                            <label>
+                                <input type="checkbox" name="selectedEmployees" value="@item.Value" />
+                                @item.Text
+                            </label>
+                        }
+                    </div>
+                </div>
+
+            </div>
+
+            <input type="submit" value="Save" />
+        }
+    </div>
+</body>
+</html>

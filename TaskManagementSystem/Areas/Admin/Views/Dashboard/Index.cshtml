@@ -1,0 +1,50 @@
+﻿@model List<dynamic>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Admin Dashboard</title>
+    <style>
+        /* Add your custom styles here */
+        .dashboard-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .project-card {
+            width: 45%;
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .task-count {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        @foreach (var project in Model)
+        {
+            <div class="project-card">
+                <div class="project-title">@project.ProjectName</div>
+                <div class="task-count">Task Count: @project.TaskCount</div>
+            </div>
+        }
+    </div>
+</body>
+</html>

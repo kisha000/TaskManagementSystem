@@ -1,0 +1,38 @@
+﻿@model TaskManagementSystem.Models.Employee
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Assign Role</title>
+    <link href="~/Styles/Create.css" rel="stylesheet" />
+</head>
+@Html.Partial("_ModalMessage")
+
+<body>
+    <div class="container">
+        <h2>Assign Role</h2>
+        @using (Html.BeginForm("AssignRole", "Role", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div>
+                <label for="EmployeeId">Select Employee:</label>
+                @Html.DropDownList("EmployeeId", (SelectList)ViewBag.EmployeeList, "-- Select Employee --", new { id = "EmployeeId" })
+            </div>
+
+            <div>
+                <label for="RoleId">Select Role:</label>
+                @Html.DropDownList("RoleId", (SelectList)ViewBag.RoleList, "-- Select Role --", new { id = "RoleId" })
+            </div>
+
+            <button type="submit">Assign Role</button>
+        }
+    </div>
+</body>
+</html>

@@ -1,0 +1,121 @@
+﻿@model IEnumerable<TaskManagementSystem.Models.Task>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Tasks</title>
+    <link href="~/Styles/TableStyle.css" rel="stylesheet" />
+    <link href="~/Styles/ModalStyles.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+        <h2>Tasks</h2>
+        <input type="text" id="searchInput" placeholder="Search...">
+        <table>
+            <thead>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Project Name</th>
+                    <th>Task Description</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Priority Level</th>
+                    <th>Status</th>
+                    <th>Created Date</th>
+                    <th>Modified Date</th>
+                    <th>Assigned to</th>
+                    <th class="actions">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Any())
+                {
+                    foreach (var task in Model)
+                    {
+                        <tr>
+                            <td>@task.TaskName</td>
+                            <td>@task.ProjectName</td>
+                            <td>@task.TaskDescription</td>
+                            <td>@(task.StartDate.HasValue ? task.StartDate.Value.ToString("dd-MMM-yyyy") : "")</td>
+                            <td>@(task.EstimateDate.HasValue ? task.EstimateDate.Value.ToString("dd-MMM-yyyy") : "")</td>
+                            <td>@task.PriorityLevel</td>
+                            <td>@task.Status</td>
+                            <td>@task.CreatedDate.ToShortDateString()</td>
+                            <td>@(task.ModifiedDate != null ? task.ModifiedDate.Value.ToShortDateString() : "None")</td>
+                            <td>@task.EmployeeName</td>
+                            <td class="actions">
+                                <a href="@Url.Action("Edit", "Task", new { id = task.TaskId })" class="btn-edit" data-id="@task.TaskId">Edit</a>
+                                <a href="@Url.Action("Delete", "Task", new { id = task.TaskId})" class="btn-delete" data-id="@task.TaskId">Delete</a>
+                            </td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="11" class="no-records">No records found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="create-link">
+            @Html.ActionLink("Create New Project", "Create", null, new { @class = "btn-create" })
+        </div>
+    </div>
+    <div id="editTaskModal" class="modal">
+        <div class="modal-content"></div>
+    </div>
+    <div id="deleteTaskModal" class="modal">
+        <div class="modal-content"></div>
+    </div>
+    <script src="~/JS/Search.js"></script>
+    <script>
+        document.querySelectorAll(".btn-edit, .btn-delete").forEach(btn => {
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+                const taskId = this.getAttribute("data-id");
+                const isEditAction = this.classList.contains("btn-edit");
+                const action = isEditAction ? "Edit" : "Delete";
+                const url = '@Url.Action("__ACTION__", "Task")'.replace("__ACTION__", action) + "?id=" + taskId;
+
+                fetch(url)
+                    .then(response => response.text())
+                    .then(data => {
+                        const modalContent = isEditAction ? "#editTaskModal .modal-content" : "#deleteTaskModal .modal-content";
+                        document.querySelector(modalContent).innerHTML = data;
+                        const modalId = isEditAction ? "editTaskModal" : "deleteTaskModal";
+                        document.getElementById(modalId).style.display = "block";
+                    });
+            });
+        });
+        // Close the modal when clicking outside the modal content
+        window.addEventListener("click", function (event) {
+            const editModal = document.getElementById("editTaskModal");
+            const deleteModal = document.getElementById("deleteTaskModal");
+
+            if (event.target === editModal) {
+                editModal.style.display = "none";
+            } else if (event.target === deleteModal) {
+                deleteModal.style.display = "none";
+            }
+        });
+
+        function closeModal() {
+            var editModal = document.getElementById('editTaskModal');
+            var modal = document.getElementById('deleteTaskModal');
+            modal.style.display = 'none';
+        }
+
+        function closeModal() {
+            var modal = document.getElementById('deleteTaskModal');
+            modal.style.display = 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+﻿.control-fluid, .container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.control-section .control-wrapper {
+    width: 80%;
+    margin: 0 auto;
+    min-width: 185px;
+}
+
+.e-bigger .control-section .control-wrapper {
+    width: 100%;
+}
+
+.property-section .right-side {
+    padding-left: 10px;
+}
+
+.property-section .left-side {
+    padding: 5px;
+    width: 25%
+}
+
+.control-styles {
+    padding-top: 30px
+}
