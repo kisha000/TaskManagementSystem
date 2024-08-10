@@ -244,12 +244,6 @@
     <Content Include="Areas\User\Views\Task\Index.cshtml" />
     <Content Include="Areas\User\Views\Task\TaskDetails.cshtml" />
     <Content Include="Areas\User\Views\web.config" />
-    <Content Include="Files\-Attachments\test.pdf" />
-    <Content Include="Files\-Attachments\TestPDFfile.pdf" />
-    <Content Include="Files\TMS-004-Attachments\test.pdf" />
-    <Content Include="Files\TMS-004-Attachments\TestPDFfile.pdf" />
-    <Content Include="Files\TMS-005-Attachments\TestPDFfile_20240410160151_2.pdf" />
-    <Content Include="Files\TMS-005-Attachments\test_20240410160115_1.pdf" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -315,6 +309,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Files\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
